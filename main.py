@@ -12,6 +12,19 @@ def main():
                 print('introduce un numero valido')
         else:
             print('Introduce el numero del algoritmo')
+    while True:
+        temp = input('¿Deseas encriptar o desencriptar?\n1.- Encriptar\n2.- Desencriptar ')
+        print('')
+        if temp.isnumeric():
+            temp = int(temp)
+            if (temp > 0 and temp < 3):
+                break 
+            else:
+                print('introduce un numero valido')
+        else:
+            print('¿Deseas encriptar o desencriptar?\n1.- Encriptar\n2.- Desencriptar ')
+    
+    
     msj = input('¿Cúal es tu mensaje?')
 
 
