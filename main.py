@@ -19,6 +19,7 @@ dict_desencoder = {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G', 7: 'H
                 13: 'N', 14: 'Ñ', 15: 'O', 16: 'P', 17: 'Q', 18: 'R', 19: 'S', 20: 'T', 21: 'U', 22: 'V', 23: 'W', 24: 'X', 25: 'Y', 26: 'Z'}
 
 mat_cif = np.array([[1,2,3], [0,4,5], [1,0,6]])
+mat_cif_t = np.array([[6, 24, 22] , [26, 21, 1], [17, 5, 10]])
 
 def hill_encoder(msj: str) -> str:
     num_msj = []
@@ -52,11 +53,8 @@ def hill_encoder(msj: str) -> str:
             res += dict_desencoder[_]
 
         text_dec.append(text_num)
-        
-    return res[:len(msj)]
-    
 
-    
+    return res[:len(msj)]
 
 def hill_desencoder(msj: str) -> str:
     pass
