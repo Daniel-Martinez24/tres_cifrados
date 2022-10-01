@@ -57,7 +57,39 @@ def hill_encoder(msj: str) -> str:
     return res[:len(msj)]
 
 def hill_desencoder(msj: str) -> str:
-    pass
+    num_msj = []
+    for _let in msj:
+        num_msj.append(dict_encoder[_let])
+    
+    # guardar 
+    deque_num = deque(num_msj)
+    list_vector = []
+    temp_list = []
+    for _ in range(len(num_msj) // 3):
+        for _ in range(3):
+            temp_list.append(deque_num.popleft())
+        list_vector.append(np.array(temp_list))
+        temp_list = []
+
+    # le añado numeros de relleno en caso de que el vector no sea de tamaño suficiente
+    if len(deque_num) > 0:
+        for _ in range(3):
+            if len(deque_num) > 0:
+                temp_list.append(deque_num.popleft())
+            else:
+                temp_list.append(0)
+        list_vector.append(np.array(temp_list))
+    
+    res = ''
+    text_dec = []
+    for _vec in list_vector:
+        text_num = np.dot(mat_cif_t , _vec) % 27
+        for _ in text_num:
+            res += dict_desencoder[_]
+
+        text_dec.append(text_num)
+
+    return res[:len(msj)]
 
 def hill_menu(option: int, msj: str) -> str:
     return hill_encoder(msj) if option == 1 else hill_desencoder(msj)
