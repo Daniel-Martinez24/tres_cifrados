@@ -121,8 +121,10 @@ def main() -> None:
             print('¿Deseas encriptar o desencriptar?\n1.- Encriptar\n2.- Desencriptar ')
     
     msj = input('¿Cúal es tu mensaje?')
-    msj = msj.upper()
 
+    # eliminar espacios y hacer mayusculas
+    msj = msj.upper().replace(" ", "") 
+    
     if (typ == 2):
         res = hill_menu(option=temp, msj=msj)
         print(res)
