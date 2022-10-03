@@ -19,17 +19,10 @@ dict_desencoder = {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G', 7: 'H
 
 # código otp
 valores_msj, valores_key, valores_cryp, msj_encript = [], [], [], []
-def otp_menu(option: int, msj: str) -> str:
-    return otp_encoder(msj) if option == 1 else otp_desencoder(msj)
+def otp_menu(option: int, msj: str, key: str) -> str:
+    return otp_encoder(msj, key) if option == 1 else otp_desencoder(msj, key)
 
-def otp_encoder(msj : str) -> str:
-    while True:
-        key = input('Qué llave deseas utilizar? ').upper()
-        if (len(msj)==len(key)):
-            break
-        else:
-            print('La palabra y la llave deben tener el mismo número de letras')
-
+def otp_encoder(msj : str, key : str) -> str:
     for pos in range (len(msj)):
         letra_msj = msj[pos]
         letra_key = key[pos]
@@ -46,7 +39,7 @@ def otp_encoder(msj : str) -> str:
     result = ''.join(msj_encript) #Se añaden a string las letras del nuevo msj encriptado
     return result
 
-def otp_desencoder(msj):
+def otp_desencoder(msj: str, key: str) -> str:
     pass
 
 # codigo Hill
@@ -162,7 +155,14 @@ def main() -> None:
         print(res)
 
     if (typ == 3):
-        print(otp_menu(option=temp, msj=msj))
+        while True:
+            key = input('Qué llave deseas utilizar? ').upper()
+            if (len(msj)==len(key)):
+                break
+            else:
+                print('La palabra y la llave deben tener el mismo número de letras')
+
+        print(otp_menu(option=temp, msj=msj, key=key))
 
 if __name__ == '__main__':
     main()
