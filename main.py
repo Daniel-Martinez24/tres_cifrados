@@ -40,7 +40,19 @@ def otp_encoder(msj : str, key : str) -> str:
     return result
 
 def otp_desencoder(msj: str, key: str) -> str:
-    pass
+    for pos in range (len(msj)):
+        letra_msj = msj[pos]
+        letra_key = key[pos]
+        valores_msj.append(dict_encoder[letra_msj]) #Se añade el valor de la letra
+        valores_key.append(dict_encoder[letra_key]) #a la lista de valores
+        valores_cryp.append(valores_msj[pos]-valores_key[pos]) #Se añade la resta de valores de msj y llave a lista de valores encriptados
+
+        if valores_cryp[pos]<0:
+            valores_cryp[pos] = (26+valores_cryp[pos]+1)
+
+        msj_encript.append(dict_desencoder[valores_cryp[pos]]) #Se convierten los valores a letras del nuevo msj encriptado
+
+    return ''.join(msj_encript) #Se añaden a string las letras del nuevo msj encriptado
 
 # codigo Hill
 mat_cif = np.array([[1,2,3], [0,4,5], [1,0,6]])
