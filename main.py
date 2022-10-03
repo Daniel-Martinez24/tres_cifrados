@@ -2,7 +2,6 @@
 import numpy as np
 from collections import deque
 
-# codigo Hill
 # dict_encoder = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7, 'I': 8, 'J': 9, 'K': 10, 'L': 11,
 #           'M': 12, 'N': 13, 'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19, 'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25,
 #           '0':26, '1': 27, '2':28, '3':29, '4':30, '5':31, '6':32, '7':33, '8':34, '9':35, '.': 36, ',': 37, ':': 38, '?': 39 , ' ': 40}
@@ -18,6 +17,39 @@ dict_encoder = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7, 
 dict_desencoder = {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G', 7: 'H', 8: 'I', 9: 'J', 10: 'K', 11: 'L', 12: 'M', 
                 13: 'N', 14: 'Ñ', 15: 'O', 16: 'P', 17: 'Q', 18: 'R', 19: 'S', 20: 'T', 21: 'U', 22: 'V', 23: 'W', 24: 'X', 25: 'Y', 26: 'Z'}
 
+# código otp
+valores_msj, valores_key, valores_cryp, msj_encript = [], [], [], []
+def otp_menu(option: int, msj: str) -> str:
+    return otp_encoder(msj) if option == 1 else otp_desencoder(msj)
+
+def otp_encoder(msj : str) -> str:
+    while True:
+        key = input('Qué llave deseas utilizar? ').upper()
+        if (len(msj)==len(key)):
+            break
+        else:
+            print('La palabra y la llave deben tener el mismo número de letras')
+
+    for pos in range (len(msj)):
+        letra_msj = msj[pos]
+        letra_key = key[pos]
+        valores_msj.append(dict_encoder[letra_msj]) #Se añade el valor de la letra
+        valores_key.append(dict_encoder[letra_key]) #a la lista de valores
+        valores_cryp.append(valores_msj[pos]+valores_key[pos]) #Se añade la sumatoria de valores de msj y llave a lista de valores encriptados
+
+        if valores_cryp[pos]>26:
+            valores_cryp[pos] = (valores_cryp[pos]%26)-1
+
+        msj_encript.append(dict_desencoder[valores_cryp[pos]]) #Se convierten los valores a letras del nuevo msj encriptado
+        #print(valores_cryp)
+
+    result = ''.join(msj_encript) #Se añaden a string las letras del nuevo msj encriptado
+    return result
+
+def otp_desencoder(msj):
+    pass
+
+# codigo Hill
 mat_cif = np.array([[1,2,3], [0,4,5], [1,0,6]])
 mat_cif_t = np.array([[6, 24, 22] , [26, 21, 1], [17, 5, 10]])
 
@@ -128,6 +160,9 @@ def main() -> None:
     if (typ == 2):
         res = hill_menu(option=temp, msj=msj)
         print(res)
+
+    if (typ == 3):
+        print(otp_menu(option=temp, msj=msj))
 
 if __name__ == '__main__':
     main()
